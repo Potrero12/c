@@ -1,0 +1,49 @@
+<div class="col-lg-6" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
+    <h1>{{ titulo }}</h1>
+
+        
+	<div *ngIf="alertMessage">
+		<div class="alert alert-info">
+		  {{alertMessage}}
+		</div>
+	</div>
+
+    <form #formAlbum="ngForm" (ngSubmit)="onSubmit()">
+        <p>
+            <label for="title">Titulo</label>
+            <input type="text" name="title" #title="ngModel" [(ngModel)]="album.title" class="form-control" required/>
+            <span *ngIf="!title.valid && title.touched">
+                El Campo El Obligatorio
+            </span>
+        </p>
+
+        <p>
+            <label for="description">Descripción</label>
+            <input type="description" name="description" #description="ngModel" [(ngModel)]="album.description" class="form-control" required/>
+            <span *ngIf="!description.valid && description.touched">
+                El campo Es Obligatorio
+            </span>
+        </p>
+
+        <p>
+            <label for="year">Año</label>
+            <input type="text" name="year" #year="ngModel" [(ngModel)]="album.year" class="form-control" required/>
+            <span *ngIf="!year.valid && year.touched">
+                El campo Es Obligatorio
+            </span>
+        </p>
+		<div *ngIf="is_edit">
+			<div class="album_image_for_edit" *ngIf="album.image && album.image != 'null'">
+				<img src="{{url + 'get-image-album/' + album.image }}" />
+			</div>
+
+			<p>
+				<label> Sube la imagen del Album</label>
+				<input type="file" placeholder="Subir imagen..." (change)="fileChangeEvent($event)" />
+			</p>
+		</div>
+
+        <input type="submit" value="{{ titulo }}" class="btn btn-primary" [disabled]="!formAlbum.form.valid" />
+
+    </form>
+</div>
